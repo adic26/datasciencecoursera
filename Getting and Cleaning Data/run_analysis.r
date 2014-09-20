@@ -49,7 +49,14 @@ run_analysis <- function()
   ## Merge data and sort ----------------------------------------------
   
   clean_data <- cbind( subject_data, y_data, x_data )
-  clean_data[ with(clean_data, order(subject, activity)), ]
+  
+  ## From the dataset in step 4, create a second, independent tiny
+  ## data set with the average of each variable for each activity
+  ## and each subject
+  library(plyr)
+  subset <- ddply(clean_data, .(subject, activity), numcolwise(mean))
+  
+  
   
   
 }
