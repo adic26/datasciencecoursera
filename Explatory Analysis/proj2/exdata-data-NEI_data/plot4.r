@@ -14,10 +14,10 @@ plot4 <- function()
   
   #finding a subset
   library(plyr)
-  allFips <- ddply(correlated,.(type,year),numcolwise(sum))
+  allFips <- ddply(correlated,.(year),numcolwise(sum))
   
   library(ggplot2)
-  qplot( year, Emissions, data=allFips,main="North America Coal Combustion Emission", colour=type,geom = c("point", "smooth") ) 
+  qplot( year, Emissions, data=allFips,main="North America Coal Combustion Emission",geom = c("point", "smooth") ) 
   
   
 }

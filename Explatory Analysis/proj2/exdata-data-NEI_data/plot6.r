@@ -6,7 +6,7 @@ plot6 <- function()
   NEI <- readRDS("summarySCC_PM25.rds")
   
   #subsetting data
-  highway_vehicles <- SCC[grepl("Veh",SCC$Short.Name,ignore.case=TRUE),] #finding only combustion data
+  highway_vehicles <- SCC[grepl("Highway",SCC$Short.Name,ignore.case=TRUE),] #finding only combustion data
   
   #finding a subset
   library(plyr)
@@ -18,12 +18,10 @@ plot6 <- function()
   correlated_LosAngeles <- LosAngelesData[LosAngelesData$SCC %in% highway_vehicles$SCC,]
   
   #subsetting by group type and year for baltimore city
-  baltimore <- ddply(correlated_baltimore,.(type,year,fips),numcolwise(sum))
-  baltimore <- baltimore[baltimore$type=="ON-ROAD",] #conforming to only on-road
+  baltimore <- ddply(correlated_baltimore,.(year,fips),numcolwise(sum))
   
   #subsetting by group type and year for Los Angeles City
-  LA <- ddply(correlated_LosAngeles,.(type,year,fips),numcolwise(sum))
-  LA <- LA[LA$type=="ON-ROAD",]
+  LA <- ddply(correlated_LosAngeles,.(year,fips),numcolwise(sum))
   
   citiesEmissions <- data.frame()
   citiesEmissions <- rbind(baltimore,LA)

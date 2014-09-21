@@ -6,7 +6,7 @@ plot5 <- function()
   NEI <- readRDS("summarySCC_PM25.rds")
   
   #subsetting data
-  highway_vehicles <- SCC[grepl("Veh",SCC$Short.Name,ignore.case=TRUE),] #finding only combustion data
+  highway_vehicles <- SCC[grepl("highway",SCC$Short.Name,ignore.case=TRUE),] #finding only combustion data
   
   #finding a subset
   library(plyr)
@@ -16,11 +16,10 @@ plot5 <- function()
   correlated <- baltimoreData[baltimoreData$SCC %in% highway_vehicles$SCC,]
   
   #subsetting by group type and year
-  baltimore <- ddply(correlated,.(type,year),numcolwise(sum))
-  baltimore <- baltimore[baltimore$type=="ON-ROAD",] #conforming to only on-road
-  
+  baltimore <- ddply(correlated,.(year),numcolwise(sum))
+
   library(ggplot2)
-  qplot( year, Emissions, data=baltimore,main="Baltimore City Motor Vehicle Emission", colour=type,geom = c("point", "smooth") ) 
+  qplot( year, Emissions, data=baltimore,main="Baltimore City Motor Vehicle Emission",geom = c("point", "smooth") ) 
   
   
 }
