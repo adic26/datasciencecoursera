@@ -5,7 +5,7 @@ plot1 <- function()
   
   #setting up subdata to get sum of Emissions groups by Type and Year
   library(plyr)
-  allFips <- ddply(NEI,.(type,year),numcolwise(sum))
+  allFips <- ddply(NEI,.(year),numcolwise(sum))
   
   #Base plotting Skeleton
   plot( x = allFips$year, y = allFips$Emissions,
@@ -13,22 +13,15 @@ plot1 <- function()
         ylab = "Emissions",
         type = "n"
         )
-  title("Emissions for All Types")
+  title("Emissions")
   
   #setting up each line per type
-  nonRoad <- allFips[ allFips$type == "NON-ROAD", ]
-  nonpoint <- allFips[ allFips$type == "NONPOINT", ]
-  onroad <- allFips[ allFips$type == "ON-ROAD", ]
-  point <- allFips[ allFips$type == "POINT", ]
-  lines( nonRoad$year, nonRoad$Emissions, col = "black" )
-  lines( nonpoint$year, nonpoint$Emissions, col = "red" )
-  lines( onroad$year, onroad$Emissions, col = "blue" )
-  lines( point$year, point$Emissions, col = "green" )
+  lines( allFips$year, allFips$Emissions, col = "black" )
   
   #setting up legend of the plot
   legend( x="topright", 
-          legend=c("NON-ROAD","NONPOINT","ON-ROAD","POINT"),
-          col=c("black","red","blue", "green"), lwd=1, 
+          legend=c("PM2.5 Emissions"),
+          col=c("black"), lwd=1, 
           pch=c(NA,NA) )
   
 
