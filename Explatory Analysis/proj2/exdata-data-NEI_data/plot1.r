@@ -1,4 +1,4 @@
-PLOT1 <- function()
+plot1 <- function()
 {
   #reading the data from rds file
   NEI <- readRDS("summarySCC_PM25.rds")
